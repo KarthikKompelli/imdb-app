@@ -8,13 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController, IMDbAPIControllerDelegate {
+class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var plotLabel: UILabel!
     @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     lazy var apiController : IMDbAPIController = IMDbAPIController(imdbDelegate: self)
     
@@ -23,16 +24,13 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate {
         super.viewDidLoad()
         
         self.apiController.imdbDelegate = self
+        let tapGesture = UITapGestureRecognizer(target: self, action: "gestureTapInView:")
+        self.view.addGestureRecognizer(tapGesture)
         
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    
-    @IBAction func fetchMovieData(sender: UIButton) {
-        self.apiController.searchIMDb("x-men")
     }
     
     func didFinishIMDbSearch(jsonResult: Dictionary<String, String>) {
@@ -59,8 +57,21 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate {
                 self.posterImageView.image = UIImage(data: posterImageData)
             }
         }
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         
-        
+        if let searchQuery = searchBar.text{
+            //hide the keyboard when the user clicks search
+            searchBar.resignFirstResponder()
+            self.apiController.searchIMDb(searchQuery)
+            searchBar.text = "" //clear the text
+        }
+    }
+    
+    
+    func gestureTapInView(gesture : UITapGestureRecognizer){
+        self.searchBar.resignFirstResponder()
     }
     
 }
