@@ -1,7 +1,8 @@
 //
 //  IMDbAPIController.swift
 //  IMDB App
-//
+//  
+//  This class handles IMDb API calls.
 //  Created by Kioko on 12/01/2016.
 //  Copyright © 2016 Thomas Kioko. All rights reserved.
 //
@@ -21,11 +22,15 @@ class IMDbAPIController {
         self.imdbDelegate = imdbDelegate
     }
     
-    func searchIMDb(forContent: String){
+    /*!
+    * @discussion This function invoke IMDb APi and returns the search result.
+    * @param Name of the movie
+    */
+    func searchIMDb(movieTitle: String){
         
         //String all the spaces and replace them with %. This ensures the string
         //is url encoded
-        let spacelessString = forContent
+        let spacelessString = movieTitle
             .stringByAddingPercentEncodingWithAllowedCharacters(
                 .URLHostAllowedCharacterSet()
         )
