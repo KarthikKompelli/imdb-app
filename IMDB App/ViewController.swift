@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, IMDbAPIControllerDelegate {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
@@ -16,58 +16,50 @@ class ViewController: UIViewController {
     @IBOutlet weak var plotLabel: UILabel!
     @IBOutlet weak var posterImageView: UIImageView!
     
+    lazy var apiController : IMDbAPIController = IMDbAPIController(imdbDelegate: self)
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.apiController.imdbDelegate = self
         
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
     
     
     @IBAction func fetchMovieData(sender: UIButton) {
-        
-        self.searchIMDb("x-men")
+        self.apiController.searchIMDb("x-men")
     }
     
-    func searchIMDb(forContent: String){
+    func didFinishIMDbSearch(jsonResult: Dictionary<String, String>) {
         
-        //String all the spaces and replace them with %. This ensures the string
-        //is url encoded
-        let spacelessString = forContent.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+        self.titleLabel.text = jsonResult["Title"]
+        self.releaseDateLabel.text = jsonResult["Released"]
+        self.plotLabel.text = jsonResult["Plot"]
+        self.ratingLabel.text = jsonResult["Rated"]
         
-            let urlPath = NSURL(string: "http://www.omdbapi.com/?t=\(spacelessString)&y=&plot=short&r=json")
-            let session = NSURLSession.sharedSession()
+        if let posterUrl = jsonResult["Poster"]{
+            self.formatImageFromUrl(posterUrl)
+        }
+    }
+    
+    func formatImageFromUrl(imageUrl: String){
+        
+        let posterImageUrl = NSURL(string: imageUrl)
+        
+        if let posterImageUrl = posterImageUrl{
+            let posterImageData = NSData(contentsOfURL: posterImageUrl)
             
-            if let urlPath = urlPath{
-                let task = session.dataTaskWithURL(urlPath){
-                    data, response, error -> Void in
-                    
-                    if let errorMessage = error{
-                        print(errorMessage.localizedDescription)
-                    }
-                    
-                    do{
-                        let jsonResult = try NSJSONSerialization.JSONObjectWithData(
-                            data!, options: NSJSONReadingOptions.MutableContainers
-                            ) as? Dictionary<String, String>
-                        
-                        self.titleLabel.text = jsonResult!["Title"]
-                        self.releaseDateLabel.text = jsonResult!["Released"]
-                        self.plotLabel.text = jsonResult!["Plot"]
-                        self.ratingLabel.text = jsonResult!["Rated"]
-                    }catch{
-                        //TODO:: Print the error message
-                    }
-                    
-                }
-                task.resume()
-            }else{
-                print(urlPath)
-                print(spacelessString)
+            if let posterImageData = posterImageData{
+                self.posterImageView.clipsToBounds = true
+                self.posterImageView.image = UIImage(data: posterImageData)
             }
+        }
+        
         
     }
     
