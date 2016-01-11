@@ -42,6 +42,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j9F-7g-wv5">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="fetchMovieData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jwc-z8-fyG"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W7Y-s2-hWr">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -57,12 +60,10 @@
                             <constraint firstItem="W7Y-s2-hWr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-1" id="6Mo-4h-GTu"/>
                             <constraint firstItem="pwC-EU-ysQ" firstAttribute="top" secondItem="mgA-mE-dGA" secondAttribute="bottom" constant="17" id="ARf-bK-bOs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="W7Y-s2-hWr" secondAttribute="trailing" constant="1" id="DDZ-45-ruZ"/>
-                            <constraint firstItem="W7Y-s2-hWr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Dwm-lc-jE9"/>
                             <constraint firstItem="j9F-7g-wv5" firstAttribute="top" secondItem="W7Y-s2-hWr" secondAttribute="bottom" constant="161" id="FoX-ti-zJe"/>
                             <constraint firstItem="mgA-mE-dGA" firstAttribute="top" secondItem="mvu-ag-Glt" secondAttribute="bottom" constant="17" id="HJk-Mo-ieh"/>
                             <constraint firstItem="mvu-ag-Glt" firstAttribute="top" secondItem="3cr-kJ-9xz" secondAttribute="bottom" constant="12" id="I47-UT-Cbo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="j9F-7g-wv5" secondAttribute="trailing" constant="71" id="IgI-jQ-FF6"/>
-                            <constraint firstItem="mvu-ag-Glt" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="KjH-JF-Qv2"/>
                             <constraint firstItem="3cr-kJ-9xz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="M4n-72-ZuY"/>
                             <constraint firstItem="mvu-ag-Glt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="NVx-Eo-gA5"/>
                             <constraint firstItem="mgA-mE-dGA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="UIe-i0-2wb"/>
@@ -75,9 +76,6 @@
                             <constraint firstItem="W7Y-s2-hWr" firstAttribute="top" secondItem="pwC-EU-ysQ" secondAttribute="bottom" constant="19" id="k0r-ym-CMc"/>
                             <constraint firstItem="mvu-ag-Glt" firstAttribute="top" secondItem="3cr-kJ-9xz" secondAttribute="bottom" constant="12" id="lK5-F9-DTg"/>
                             <constraint firstItem="pwC-EU-ysQ" firstAttribute="top" secondItem="mgA-mE-dGA" secondAttribute="bottom" constant="17" id="pB2-O5-huc"/>
-                            <constraint firstItem="mgA-mE-dGA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rXq-n5-NX9"/>
-                            <constraint firstItem="pwC-EU-ysQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uL3-ik-bxW"/>
-                            <constraint firstItem="j9F-7g-wv5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uYK-iI-VYS"/>
                             <constraint firstItem="pwC-EU-ysQ" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="v4u-RJ-tJP"/>
                             <constraint firstItem="pwC-EU-ysQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="w0o-hi-Pgh"/>
                             <constraint firstItem="j9F-7g-wv5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="69" id="wz8-1L-72P"/>
@@ -98,7 +96,6 @@
                                 <exclude reference="VY1-bx-TZb"/>
                                 <exclude reference="ZbE-5A-8jB"/>
                                 <exclude reference="I47-UT-Cbo"/>
-                                <exclude reference="KjH-JF-Qv2"/>
                                 <exclude reference="NVx-Eo-gA5"/>
                                 <exclude reference="XBY-rl-N85"/>
                                 <exclude reference="lK5-F9-DTg"/>
@@ -106,20 +103,16 @@
                                 <exclude reference="HJk-Mo-ieh"/>
                                 <exclude reference="UIe-i0-2wb"/>
                                 <exclude reference="d4y-td-LJS"/>
-                                <exclude reference="rXq-n5-NX9"/>
                                 <exclude reference="ARf-bK-bOs"/>
                                 <exclude reference="pB2-O5-huc"/>
-                                <exclude reference="uL3-ik-bxW"/>
                                 <exclude reference="v4u-RJ-tJP"/>
                                 <exclude reference="w0o-hi-Pgh"/>
                                 <exclude reference="6Mo-4h-GTu"/>
                                 <exclude reference="DDZ-45-ruZ"/>
-                                <exclude reference="Dwm-lc-jE9"/>
                                 <exclude reference="aa0-w6-Ilr"/>
                                 <exclude reference="k0r-ym-CMc"/>
                                 <exclude reference="FoX-ti-zJe"/>
                                 <exclude reference="IgI-jQ-FF6"/>
-                                <exclude reference="uYK-iI-VYS"/>
                                 <exclude reference="wz8-1L-72P"/>
                                 <exclude reference="zGW-9V-rOh"/>
                                 <exclude reference="eCc-oG-PBx"/>
@@ -140,7 +133,6 @@
                                 <include reference="VY1-bx-TZb"/>
                                 <include reference="ZbE-5A-8jB"/>
                                 <include reference="I47-UT-Cbo"/>
-                                <include reference="KjH-JF-Qv2"/>
                                 <include reference="NVx-Eo-gA5"/>
                                 <include reference="XBY-rl-N85"/>
                                 <include reference="lK5-F9-DTg"/>
@@ -148,20 +140,16 @@
                                 <include reference="HJk-Mo-ieh"/>
                                 <include reference="UIe-i0-2wb"/>
                                 <include reference="d4y-td-LJS"/>
-                                <include reference="rXq-n5-NX9"/>
                                 <include reference="ARf-bK-bOs"/>
                                 <include reference="pB2-O5-huc"/>
-                                <include reference="uL3-ik-bxW"/>
                                 <include reference="v4u-RJ-tJP"/>
                                 <include reference="w0o-hi-Pgh"/>
                                 <include reference="6Mo-4h-GTu"/>
                                 <include reference="DDZ-45-ruZ"/>
-                                <include reference="Dwm-lc-jE9"/>
                                 <include reference="aa0-w6-Ilr"/>
                                 <include reference="k0r-ym-CMc"/>
                                 <include reference="FoX-ti-zJe"/>
                                 <include reference="IgI-jQ-FF6"/>
-                                <include reference="uYK-iI-VYS"/>
                                 <include reference="wz8-1L-72P"/>
                                 <include reference="zGW-9V-rOh"/>
                                 <include reference="eCc-oG-PBx"/>
@@ -169,7 +157,6 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="fetchMovieData" destination="j9F-7g-wv5" id="Xs9-JI-clZ"/>
                         <outlet property="plotLabel" destination="W7Y-s2-hWr" id="kk5-mJ-oPS"/>
                         <outlet property="posterImageView" destination="3cr-kJ-9xz" id="UM9-wk-eZn"/>
                         <outlet property="ratingLabel" destination="pwC-EU-ysQ" id="bkZ-yt-FBh"/>
