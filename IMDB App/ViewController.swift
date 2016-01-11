@@ -18,15 +18,58 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-       
+        
     }
     
-    @IBOutlet weak var fetchMovieData: UIButton!
+    
+    @IBAction func fetchMovieData(sender: UIButton) {
+        
+        self.searchIMDb("x-men")
+    }
+    
+    func searchIMDb(forContent: String){
+        
+        //String all the spaces and replace them with %. This ensures the string
+        //is url encoded
+        let spacelessString = forContent.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+        
+            let urlPath = NSURL(string: "http://www.omdbapi.com/?t=\(spacelessString)&y=&plot=short&r=json")
+            let session = NSURLSession.sharedSession()
+            
+            if let urlPath = urlPath{
+                let task = session.dataTaskWithURL(urlPath){
+                    data, response, error -> Void in
+                    
+                    if let errorMessage = error{
+                        print(errorMessage.localizedDescription)
+                    }
+                    
+                    do{
+                        let jsonResult = try NSJSONSerialization.JSONObjectWithData(
+                            data!, options: NSJSONReadingOptions.MutableContainers
+                            ) as? Dictionary<String, String>
+                        
+                        self.titleLabel.text = jsonResult!["Title"]
+                        self.releaseDateLabel.text = jsonResult!["Released"]
+                        self.plotLabel.text = jsonResult!["Plot"]
+                        self.ratingLabel.text = jsonResult!["Rated"]
+                    }catch{
+                        //TODO:: Print the error message
+                    }
+                    
+                }
+                task.resume()
+            }else{
+                print(urlPath)
+                print(spacelessString)
+            }
+        
+    }
     
 }
 
