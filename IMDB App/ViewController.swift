@@ -55,6 +55,7 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
             if let posterImageData = posterImageData{
                 self.posterImageView.clipsToBounds = true
                 self.posterImageView.image = UIImage(data: posterImageData)
+                self.blurBackGround(self.posterImageView.image!)
             }
         }
     }
@@ -72,6 +73,39 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
     
     func gestureTapInView(gesture : UITapGestureRecognizer){
         self.searchBar.resignFirstResponder()
+    }
+    
+    /*!
+    * @discussion This function uses an Image to create a blurr effect.
+    * @param Image
+    */
+    func blurBackGround(image: UIImage){
+        
+        //Get the dimensions of the view
+        let frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        let imageView = UIImageView(frame: frame)
+        imageView.image = image
+        imageView.contentMode = .ScaleAspectFit
+        
+        
+        //Set up blurr effect
+        let blurEffect = UIBlurEffect(style: .Light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        
+        let transparentWhiteView = UIView(frame: frame)
+        transparentWhiteView.backgroundColor = UIColor(white: 1.0, alpha: 0.80)
+        
+        let viewsArray = [imageView, blurEffectView, transparentWhiteView]
+        
+        for index in 0..<viewsArray.count{
+            if let oldView = self.view.viewWithTag(index + 1){
+                oldView.removeFromSuperview()
+            }
+            
+            let viewToInsert = viewsArray[index]
+            self.view.insertSubview(viewToInsert, atIndex: index + 1)
+            viewToInsert.tag = 1
+        }
     }
     
 }
