@@ -37,7 +37,7 @@ class IMDbAPIController {
         
         if let spacelessString = spacelessString{
             let urlPath = NSURL(string: "http://www.omdbapi.com/?t="
-                + "\(spacelessString)&y=&plot=short&r=json")
+                + "\(spacelessString)&tomatoes=true")
             let session = NSURLSession.sharedSession()
             
             if let urlPath = urlPath{
