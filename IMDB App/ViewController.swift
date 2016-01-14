@@ -17,6 +17,7 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
     @IBOutlet weak var plotLabel: UILabel!
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var backGroundView: UIView!
     
     lazy var apiController : IMDbAPIController = IMDbAPIController(imdbDelegate: self)
     
@@ -28,6 +29,8 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
         let tapGesture = UITapGestureRecognizer(target: self, action: "gestureTapInView:")
         self.view.addGestureRecognizer(tapGesture)
         self.formatLabels(true)
+        self.backGroundView.backgroundColor = UIColor(red: 0.988, green: 0.725,
+            blue: 0.200, alpha: 1.0)
     }
     
     override func didReceiveMemoryWarning() {
@@ -39,10 +42,16 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
         self.formatLabels(false)
         
         self.titleLabel.text = jsonResult["Title"]
-        self.releaseDateLabel.text = "Release Date: " + jsonResult["Released"]!
         self.plotLabel.text = jsonResult["Plot"]
-        self.ratingLabel.text = "Rating: " + jsonResult["Rated"]!
         
+        
+        if let releaseDate = jsonResult["Released"]{
+              self.releaseDateLabel.text = "Release Date: " + releaseDate
+        }
+        
+        if let rating = jsonResult["Rated"]{
+            self.ratingLabel.text = "Rating: " + rating
+        }
         if let posterUrl = jsonResult["Poster"]{
             self.formatImageFromUrl(posterUrl)
         }
@@ -71,7 +80,7 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
             case self.releaseDateLabel, self.ratingLabel:
                 label.font = UIFont(name: "Avenir Next", size: 12)
             case self.plotLabel:
-                label.font = UIFont(name: "Avenir Next", size: 16)
+                label.font = UIFont(name: "Avenir Next", size: 18)
             case self.tomatoeRating:
                 label.font = UIFont(name: "AvenirNext-UltraLight", size: 48)
                 label.textColor = UIColor(red: 0.984, green: 0.256, blue: 0.184, alpha: 1.0)
@@ -91,7 +100,7 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
             
             if let posterImageData = posterImageData{
                 self.posterImageView.clipsToBounds = true
-                self.posterImageView.layer.cornerRadius = 100.0
+//                self.posterImageView.layer.cornerRadius = 100.0
                 self.posterImageView.image = UIImage(data: posterImageData)
                 self.blurBackGround(self.posterImageView.image!)
             }
