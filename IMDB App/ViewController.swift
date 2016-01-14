@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var tomatoeRating: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var plotLabel: UILabel!
@@ -26,7 +27,7 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
         self.apiController.imdbDelegate = self
         let tapGesture = UITapGestureRecognizer(target: self, action: "gestureTapInView:")
         self.view.addGestureRecognizer(tapGesture)
-        
+        self.formatLabels(true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -35,13 +36,49 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
     
     func didFinishIMDbSearch(jsonResult: Dictionary<String, String>) {
         
+        self.formatLabels(false)
+        
         self.titleLabel.text = jsonResult["Title"]
-        self.releaseDateLabel.text = jsonResult["Released"]
+        self.releaseDateLabel.text = "Release Date: " + jsonResult["Released"]!
         self.plotLabel.text = jsonResult["Plot"]
-        self.ratingLabel.text = jsonResult["Rated"]
+        self.ratingLabel.text = "Rating: " + jsonResult["Rated"]!
         
         if let posterUrl = jsonResult["Poster"]{
             self.formatImageFromUrl(posterUrl)
+        }
+        
+        if let tomatoeMeterRating = jsonResult["tomatoMeter"]{
+            self.tomatoeRating.text = tomatoeMeterRating + "%"
+        }
+    }
+    
+    func formatLabels(firstLaunch : Bool){
+        
+        let labelsArray = [self.titleLabel, self.ratingLabel, self.releaseDateLabel,
+            self.plotLabel, self.tomatoeRating]
+        
+        if firstLaunch{
+            for label in labelsArray{
+                label.text = ""
+            }
+        }
+        for label in labelsArray{
+            label.textAlignment = .Center
+            
+            switch label{
+            case self.titleLabel:
+                label.font = UIFont(name: "Avenir Next", size: 28)
+            case self.releaseDateLabel, self.ratingLabel:
+                label.font = UIFont(name: "Avenir Next", size: 12)
+            case self.plotLabel:
+                label.font = UIFont(name: "Avenir Next", size: 16)
+            case self.tomatoeRating:
+                label.font = UIFont(name: "AvenirNext-UltraLight", size: 48)
+                label.textColor = UIColor(red: 0.984, green: 0.256, blue: 0.184, alpha: 1.0)
+            default:
+                label.font = UIFont(name: "Avenir Next", size: 14)
+            }
+            
         }
     }
     
@@ -54,6 +91,7 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
             
             if let posterImageData = posterImageData{
                 self.posterImageView.clipsToBounds = true
+                self.posterImageView.layer.cornerRadius = 100.0
                 self.posterImageView.image = UIImage(data: posterImageData)
                 self.blurBackGround(self.posterImageView.image!)
             }
@@ -93,7 +131,7 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         
         let transparentWhiteView = UIView(frame: frame)
-        transparentWhiteView.backgroundColor = UIColor(white: 1.0, alpha: 0.80)
+        transparentWhiteView.backgroundColor = UIColor(white: 1.0, alpha: 0.95)
         
         let viewsArray = [imageView, blurEffectView, transparentWhiteView]
         
