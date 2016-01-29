@@ -18,6 +18,7 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var backGroundView: UIView!
+    @IBOutlet weak var searchMovieGuide: UILabel!
     
     lazy var apiController : IMDbAPIController = IMDbAPIController(imdbDelegate: self)
     
@@ -40,6 +41,7 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
     func didFinishIMDbSearch(jsonResult: Dictionary<String, String>) {
         
         self.formatLabels(false)
+        searchMovieGuide.hidden = true
         
         self.titleLabel.text = jsonResult["Title"]
         self.plotLabel.text = jsonResult["Plot"]
@@ -67,9 +69,13 @@ class ViewController: UIViewController, IMDbAPIControllerDelegate, UISearchBarDe
             self.plotLabel, self.tomatoeRating]
         
         if firstLaunch{
+            searchMovieGuide.hidden = false
+            searchMovieGuide.font = UIFont(name: "Avenir Next", size: 28)
             for label in labelsArray{
                 label.text = ""
             }
+        }else{
+            searchMovieGuide.hidden = true
         }
         for label in labelsArray{
             label.textAlignment = .Center
